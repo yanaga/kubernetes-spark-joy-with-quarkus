@@ -38,8 +38,8 @@ spec:
             memory: "64Mi"
             cpu: "250m"
           limits:
-            memory: "96Mi"
-            cpu: "500m"
+            memory: "512Mi"
+            cpu: "1000m"
         livenessProbe:
           failureThreshold: 3
           httpGet:

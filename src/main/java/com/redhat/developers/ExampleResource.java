@@ -13,4 +13,12 @@ public class ExampleResource {
     public String hello() {
         return "hello";
     }
+
+    @Path("/sparksjoy")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String sparksjoy() {
+        return "Kubernetes Sparks Joy With Quarkus";
+    }
+
 }
