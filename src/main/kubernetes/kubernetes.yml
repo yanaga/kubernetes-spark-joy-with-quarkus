@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.quarkus.io/vcs-url: https://github.com/yanaga/kubernetes-spark-joy-with-quarkus.git
+    app.quarkus.io/build-timestamp: 2020-09-17 - 21:33:09 +0000
+    app.quarkus.io/commit-id: 709710512bce4d2dfe86f4fc4099a108c8f99b00
+  labels:
+    app.kubernetes.io/name: kubernetes-spark-joy-with-quarkus
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  name: kubernetes-spark-joy-with-quarkus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubernetes-spark-joy-with-quarkus
+      app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  template:
+    metadata:
+      annotations:
+        app.quarkus.io/vcs-url: https://github.com/yanaga/kubernetes-spark-joy-with-quarkus.git
+        app.quarkus.io/build-timestamp: 2020-09-17 - 21:33:09 +0000
+        app.quarkus.io/commit-id: 709710512bce4d2dfe86f4fc4099a108c8f99b00
+      labels:
+        app.kubernetes.io/name: kubernetes-spark-joy-with-quarkus
+        app.kubernetes.io/version: 1.0.0-SNAPSHOT
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        image: gcr.io/wise-coyote-827/kubernetes-spark-joy-with-quarkus:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "96Mi"
+            cpu: "500m"
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health/live
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: kubernetes-spark-joy-with-quarkus
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health/ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 10
+      serviceAccount: kubernetes-spark-joy-with-quarkus
