@@ -27,6 +27,8 @@ spec:
     spec:
       containers:
       - env:
+        - name: QUARKUS_LAUNCH_DEVMODE
+          value: "true"
         - name: KUBERNETES_NAMESPACE
           valueFrom:
             fieldRef:
